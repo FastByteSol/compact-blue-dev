@@ -1,18 +1,7 @@
 package org.fbs.cb.data;
 
-import org.fbs.cb.event.ClientEvents;
-
 public class TagKeyHandingResult {
 
-    public TagKeyHandingResult(boolean MINEABLE_BY_PICKAXE, boolean MINEABLE_BY_SHOVEL, boolean MINEABLE_BY_HOU, boolean MINEABLE_BY_AXE, PickaxeLevel pickaxeLevel, boolean isOre, boolean isCrumbly){
-        this.MINEABLE_BY_PICKAXE = MINEABLE_BY_PICKAXE;
-        this.MINEABLE_BY_SHOVEL = MINEABLE_BY_SHOVEL;
-        this.MINEABLE_BY_HOU = MINEABLE_BY_HOU;
-        this.MINEABLE_BY_AXE = MINEABLE_BY_AXE;
-        this.pickaxeLevel = pickaxeLevel;
-        this.isOre = isOre;
-        this.isCrumbly = isCrumbly;
-    }
     public TagKeyHandingResult(String tool, PickaxeLevel pickaxeLevel, boolean isOre, boolean isCrumbly){
         switch (tool){
             case "pickaxe":{
@@ -92,4 +81,25 @@ public class TagKeyHandingResult {
         return isCrumbly;
     }
 
+    @Override
+    public String toString() {
+        String pickaxeLevel = "NONE";
+        if (this.pickaxeLevel == PickaxeLevel.STONE) pickaxeLevel = "STONE";
+        else if (this.pickaxeLevel == PickaxeLevel.IRON) pickaxeLevel = "IRON";
+        else if (this.pickaxeLevel == PickaxeLevel.DIAMOND) pickaxeLevel = "DIAMOND";
+
+
+        String tool = "";
+        if (MINEABLE_BY_AXE) tool = "AXE";
+        else if (MINEABLE_BY_HOU) tool = "HOU";
+        else if (MINEABLE_BY_PICKAXE) tool = "PICKAXE";
+        else if (MINEABLE_BY_SHOVEL) tool = "SHOVEL";
+
+        return String.format(
+                """
+                tool: %s (pickaxe level: %s)
+                isOre: %s
+                isCrumbly: %s
+                """, tool, pickaxeLevel, isOre, isCrumbly);
+    }
 }
