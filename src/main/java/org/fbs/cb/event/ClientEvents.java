@@ -8,7 +8,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import org.fbs.cb.CB;
-import org.fbs.cb.service.AutoTool;
+import org.fbs.cb.func.AutoTool;
 import org.fbs.cb.util.KeyBinding;
 
 public class ClientEvents {

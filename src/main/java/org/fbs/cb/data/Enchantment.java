@@ -5,6 +5,7 @@ public enum Enchantment {
     EFFICIENCY,
     SILK_TOUCH,
     FORTUNE,
+    STRENGTH,
     LOOTING,
 
 }
