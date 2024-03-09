@@ -2,7 +2,7 @@ package org.fbs.cb.util;
 
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
-import org.fbs.cb.data.PickaxeLevel;
+import org.fbs.cb.data.auto_tool.PickaxeLevel;
 import org.fbs.cb.data.TagKeyHandingResult;
 
 import java.util.List;

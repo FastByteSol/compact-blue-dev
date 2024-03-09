@@ -8,7 +8,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import org.fbs.cb.CB;
-import org.fbs.cb.func.AutoTool;
+import org.fbs.cb.gui.screen.MenuScreen;
 import org.fbs.cb.util.KeyBinding;
 
 public class ClientEvents {
@@ -21,7 +21,15 @@ public class ClientEvents {
         @SubscribeEvent
         public static void onKeyInput(InputEvent.Key key){
             if (KeyBinding.OPEN_MENU_KEY.consumeClick()){
-                AutoTool.equip(Minecraft.getInstance());
+                try {
+                    Minecraft.getInstance().setScreen(new MenuScreen(Minecraft.getInstance().screen, Minecraft.getInstance()));
+                }
+                catch (Exception e){
+                    CB.LOGGER.info("info:", (Object) e.getStackTrace());
+                }
+
+                //AutoTool.equip(Minecraft.getInstance());
+                //FIXME:ARRAY INDEX 16 OUT OF BOUNDS LENGTH 16
             }
         }
 

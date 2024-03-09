@@ -1,9 +1,11 @@
 package org.fbs.cb.data;
 
+import org.fbs.cb.data.auto_tool.PickaxeLevel;
+
 public class TagKeyHandingResult {
 
-    public TagKeyHandingResult(String tool, PickaxeLevel pickaxeLevel, boolean isOre, boolean isCrumbly){
-        switch (tool){
+    public TagKeyHandingResult(String handledItem, PickaxeLevel pickaxeLevel, boolean isOre, boolean isCrumbly){
+        switch (handledItem){
             case "pickaxe":{
                 MINEABLE_BY_PICKAXE = true;
                 MINEABLE_BY_AXE = false;
@@ -89,17 +91,17 @@ public class TagKeyHandingResult {
         else if (this.pickaxeLevel == PickaxeLevel.DIAMOND) pickaxeLevel = "DIAMOND";
 
 
-        String tool = "";
-        if (MINEABLE_BY_AXE) tool = "AXE";
-        else if (MINEABLE_BY_HOU) tool = "HOU";
-        else if (MINEABLE_BY_PICKAXE) tool = "PICKAXE";
-        else if (MINEABLE_BY_SHOVEL) tool = "SHOVEL";
+        String handledItem = "";
+        if (MINEABLE_BY_AXE) handledItem = "AXE";
+        else if (MINEABLE_BY_HOU) handledItem = "HOU";
+        else if (MINEABLE_BY_PICKAXE) handledItem = "PICKAXE";
+        else if (MINEABLE_BY_SHOVEL) handledItem = "SHOVEL";
 
         return String.format(
                 """
-                tool: %s (pickaxe level: %s)
+                handledItem: %s (pickaxe level: %s)
                 isOre: %s
                 isCrumbly: %s
-                """, tool, pickaxeLevel, isOre, isCrumbly);
+                """, handledItem, pickaxeLevel, isOre, isCrumbly);
     }
 }

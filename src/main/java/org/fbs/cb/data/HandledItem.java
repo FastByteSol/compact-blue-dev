@@ -1,11 +1,13 @@
 package org.fbs.cb.data;
 
+import org.fbs.cb.data.auto_tool.PickaxeLevel;
+
 import java.util.Collections;
 import java.util.List;
 
-public class Tool {
+public class HandledItem {
 
-    public Tool(float strengthPercent, PickaxeLevel pickaxeLevel, List<EnchantmentReduced> enchantmentReducedList, int inventoryId){
+    public HandledItem(float strengthPercent, PickaxeLevel pickaxeLevel, List<EnchantmentReduced> enchantmentReducedList, int inventoryId){
         this.strengthPercent = strengthPercent;
         this.pickaxeLevel = pickaxeLevel;
         this.enchantmentReducedList = Collections.unmodifiableList(enchantmentReducedList);

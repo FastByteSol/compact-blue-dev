@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 public class CB
 {
     public static final String MOD_ID = "compact_blue";
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public CB()
     {

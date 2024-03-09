@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.fbs.cb.data.*;
+import org.fbs.cb.data.auto_tool.PickaxeLevel;
 import org.fbs.cb.util.TagKeyHanding;
 
 import java.util.ArrayList;
@@ -31,14 +32,13 @@ public class AutoTool {
             TagKeyHandingResult handlingResult = TagKeyHanding.handingResult(list);
 
             ItemStack itemInHand = player.getMainHandItem();
-            List<Tool> toolList = new ArrayList<>();
+            List<HandledItem> handledItemList = new ArrayList<>();
 
             int inventorySize = player.getInventory().getContainerSize();
 
             for (int i = 0; i < inventorySize; i++) {
 
                 ItemStack itemStack = player.getInventory().getItem(i);
-                player.sendSystemMessage(Component.literal(itemStack.toString()));
                 if (contain(itemStack.toString(), "pickaxe") ||
                         contain(itemStack.toString(), "hou")||
                         contain(itemStack.toString(), "axe")||
@@ -75,9 +75,9 @@ public class AutoTool {
 
                         enchantmentReducedList.add(new EnchantmentReduced(enchantment, enchntLevel));
                     }
-                    Tool tool = new Tool(((float) itemStack.getDamageValue() / itemStack.getMaxDamage()), pickaxeLevel, enchantmentReducedList, i);
+                    HandledItem handledItem = new HandledItem(((float) itemStack.getDamageValue() / itemStack.getMaxDamage()), pickaxeLevel, enchantmentReducedList, i);
 
-                    player.sendSystemMessage(Component.literal(tool.toString()));
+                    player.sendSystemMessage(Component.literal(handledItem.toString()));
 
                 }
 

@@ -1,4 +1,4 @@
-package org.fbs.cb.data;
+package org.fbs.cb.data.auto_tool;
 
 public enum PickaxeLevel {
     NONE(0),
