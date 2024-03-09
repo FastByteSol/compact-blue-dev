@@ -19,7 +19,7 @@ public class GuiRectanglePlain extends MenuGuiElement{
     }
 
     @Override
-    protected void draw(GuiGraphics guiGraphics) throws GuiDrawException {
+    public void draw(GuiGraphics guiGraphics) throws GuiDrawException {
 
         if (color == null) throw new GuiDrawException("Color is null");
         if (firstPoint == null) throw new GuiDrawException("First point is null");

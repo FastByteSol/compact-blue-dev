@@ -1,14 +1,14 @@
 package org.fbs.cb.gui.screen;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
-
-import java.util.List;
+import net.minecraft.world.phys.Vec2;
+import org.fbs.cb.CB;
+import org.fbs.cb.exception.GuiDrawException;
+import org.fbs.cb.gui.element.GuiColors;
+import org.fbs.cb.gui.element.GuiRectanglePlain;
 
 public class MenuScreen extends Screen {
 
@@ -17,8 +17,6 @@ public class MenuScreen extends Screen {
     private final Minecraft client;
     private final int width;
     private final int height;
-
-    private final List<GuiEventListener> children = (List<GuiEventListener>) children();
 
     public MenuScreen(Screen parent, Minecraft client) {
         super(Component.literal("Menu Screen"));
@@ -41,11 +39,18 @@ public class MenuScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int p_281550_, int p_282878_, float p_282465_) {
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float p_282465_) {
 
-        //guiGraphics.fillGradient(0, 0, width, height, 0xFF0000FF, 0xFF0000FF);
+        GuiRectanglePlain rectanglePlain = new GuiRectanglePlain();
+        rectanglePlain.setColor(GuiColors.TRANSLUCENT_WHITE);
+        rectanglePlain.setCoordinates(new Vec2(0, 0), new Vec2(width, height));
+        try {
+            rectanglePlain.draw(guiGraphics);
+        } catch (GuiDrawException e) {
+            CB.LOGGER.info(e.getMessage());
+        }
 
-        super.render(guiGraphics, p_281550_, p_282878_, p_282465_);
+        super.render(guiGraphics, mouseX, mouseY, p_282465_);
         isOpen = true;
     }
 
@@ -54,14 +59,14 @@ public class MenuScreen extends Screen {
     }
 
     @Override
-    public boolean mouseClicked(double p_94695_, double p_94696_, int p_94697_) {
-        return super.mouseClicked(p_94695_, p_94696_, p_94697_);
+    public boolean mouseClicked(double mouseX, double mouseY, int mouseKey) {
+        return super.mouseClicked(mouseX, mouseY, mouseKey);
     }
 
     @Override
     public void onClose() {
-        if (parent == null) client.setScreen(parent);
-        else client.player.sendSystemMessage(Component.literal("sfe"));
+        if (parent != null) client.setScreen(parent);
+        else client.player.sendSystemMessage(Component.literal("Parent is null"));
         isOpen = false;
     }
 
@@ -73,10 +78,6 @@ public class MenuScreen extends Screen {
     @Override
     public void tick() {
         super.tick();
-    }
-
-    public void addListener(GuiEventListener listener){
-        children.add(listener);
     }
 
 }
