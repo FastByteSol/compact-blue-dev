@@ -50,6 +50,7 @@ public class MenuScreen extends Screen {
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int mouseKey) {
+
         return super.mouseClicked(mouseX, mouseY, mouseKey);
     }
 
