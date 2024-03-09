@@ -1,4 +1,4 @@
-package org.fbs.cb.gui.element;
+package org.fbs.cb.gui.screen.element;
 
 public class GuiColor {
 

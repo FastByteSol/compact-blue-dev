@@ -7,13 +7,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.Vec2;
 import org.fbs.cb.CB;
 import org.fbs.cb.exception.GuiDrawException;
-import org.fbs.cb.gui.element.GuiColors;
-import org.fbs.cb.gui.element.GuiRectanglePlain;
+import org.fbs.cb.gui.screen.element.GuiColors;
+import org.fbs.cb.gui.screen.element.GuiRectanglePlain;
 
 public class MenuScreen extends Screen {
-
-    private static boolean isOpen;
-    private final Screen parent;
     private final Minecraft client;
     private final int width;
     private final int height;
@@ -21,7 +18,6 @@ public class MenuScreen extends Screen {
     public MenuScreen(Screen parent, Minecraft client) {
         super(Component.literal("Menu Screen"));
         this.client = client;
-        this.parent = parent;
         if (parent != null) {
             width = parent.getRectangle().width();
             height = parent.getRectangle().height();
@@ -35,7 +31,6 @@ public class MenuScreen extends Screen {
     @Override
     public void init() {
         super.init();
-
     }
 
     @Override
@@ -51,11 +46,6 @@ public class MenuScreen extends Screen {
         }
 
         super.render(guiGraphics, mouseX, mouseY, p_282465_);
-        isOpen = true;
-    }
-
-    public static boolean isOpen(){
-        return isOpen;
     }
 
     @Override
@@ -65,9 +55,7 @@ public class MenuScreen extends Screen {
 
     @Override
     public void onClose() {
-        if (parent != null) client.setScreen(parent);
-        else client.player.sendSystemMessage(Component.literal("Parent is null"));
-        isOpen = false;
+        client.setScreen(null);
     }
 
     @Override

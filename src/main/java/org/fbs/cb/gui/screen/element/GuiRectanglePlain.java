@@ -1,4 +1,4 @@
-package org.fbs.cb.gui.element;
+package org.fbs.cb.gui.screen.element;
 
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.phys.Vec2;
