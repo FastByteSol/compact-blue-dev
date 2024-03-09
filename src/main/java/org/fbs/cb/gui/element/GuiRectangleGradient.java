@@ -4,13 +4,14 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.phys.Vec2;
 import org.fbs.cb.exception.GuiDrawException;
 
-public class GuiRectanglePlain extends MenuGuiElement{
+public class GuiRectangleGradient extends MenuGuiElement{
 
-    private GuiColor color;
+    private GuiColor firstColor, secondColor;
     private Vec2 firstPoint, secondPoint;
 
-    public void setColor(GuiColor color) {
-        this.color = color;
+    public void setColors(GuiColor firstColor, GuiColor secondColor) {
+        this.firstColor = firstColor;
+        this.secondColor = secondColor;
     }
 
     public void setCoordinates(Vec2 firstPoint, Vec2 secondPoint){
@@ -21,11 +22,12 @@ public class GuiRectanglePlain extends MenuGuiElement{
     @Override
     protected void draw(GuiGraphics guiGraphics) throws GuiDrawException {
 
-        if (color == null) throw new GuiDrawException("Color is null");
+        if (firstColor == null) throw new GuiDrawException("First color is null");
+        if (secondColor == null) throw new GuiDrawException("Second color is null");
         if (firstPoint == null) throw new GuiDrawException("First point is null");
         if (secondPoint == null) throw new GuiDrawException("Second point is null");
 
-        guiGraphics.fillGradient((int) firstPoint.x, (int) firstPoint.y, (int) secondPoint.x, (int) secondPoint.y, color.getColor(), color.getColor());
+        guiGraphics.fillGradient((int) firstPoint.x, (int) firstPoint.y, (int) secondPoint.x, (int) secondPoint.y, firstColor.getColor(), secondColor.getColor());
 
     }
 
