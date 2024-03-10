@@ -17,6 +17,8 @@ public class GuiButton extends ActionGuiElement {
     private Font font;
     private boolean hasBorder = false;
     private boolean isDrawn = false;
+    private boolean isActive = true;
+    private GuiGraphics guiGraphics = null;
 
     public void setFillColor(GuiColor fillColor) {
         this.fillColor = fillColor;
@@ -31,6 +33,14 @@ public class GuiButton extends ActionGuiElement {
         this.text = text;
         this.font = font;
         this.textColor = textColor;
+    }
+
+    public boolean isDrawn() {
+        return isDrawn;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 
     public void setCoordinates(@NotNull Vec2 firstPoint, @NotNull Vec2 secondPoint){
@@ -59,6 +69,8 @@ public class GuiButton extends ActionGuiElement {
     @Override
     public void draw(GuiGraphics guiGraphics) throws GuiDrawException {
 
+        this.guiGraphics = guiGraphics;
+
         if (fillColor == null) throw new GuiDrawException("Fill color is null");
         if (firstPoint == null) throw new GuiDrawException("First point is null");
         if (secondPoint == null) throw new GuiDrawException("Second point is null");
@@ -83,7 +95,7 @@ public class GuiButton extends ActionGuiElement {
     }
 
     @Override
-    public void onClick(double mouseX, double mouseY, int mouseKey) {
+    public boolean onMouseClick(double mouseX, double mouseY, int mouseKey) {
         if (isDrawn) {
             if (mouseX >= firstPoint.x && mouseX <= secondPoint.x
                     && mouseY >= firstPoint.y && mouseY <= secondPoint.y) {
@@ -96,10 +108,9 @@ public class GuiButton extends ActionGuiElement {
                 } else {
                     CB.LOGGER.info("Unregistered click");
                 }
+                return true;
             }
         }
+        return false;
     }
-
-
-
 }
