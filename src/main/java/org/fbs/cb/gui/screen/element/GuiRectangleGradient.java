@@ -20,7 +20,7 @@ public class GuiRectangleGradient extends GuiElement {
     }
 
     @Override
-    protected void draw(GuiGraphics guiGraphics) throws GuiDrawException {
+    public void draw(GuiGraphics guiGraphics) throws GuiDrawException {
 
         if (firstColor == null) throw new GuiDrawException("First color is null");
         if (secondColor == null) throw new GuiDrawException("Second color is null");
