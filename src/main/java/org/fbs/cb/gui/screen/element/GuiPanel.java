@@ -12,6 +12,8 @@ public class GuiPanel extends ActionGuiElement{
 
     private boolean isDrawn = false;
     private ActionGuiElement lastClicked = null;
+    private Scroller scroller = null;
+    private boolean hasScroller = false;
     private Vec2 firstPoint, secondPoint;
     public void setCoordinates(@NotNull Vec2 firstPoint, @NotNull Vec2 secondPoint){
         float x0, x1;
@@ -48,6 +50,11 @@ public class GuiPanel extends ActionGuiElement{
 
     public boolean isDrawn() {
         return isDrawn;
+    }
+
+    public void addScroller(@NotNull Scroller scroller){
+        scroller = scroller;
+        hasScroller = true;
     }
 
     @Override
