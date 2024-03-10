@@ -5,6 +5,12 @@ import org.fbs.cb.exception.GuiDrawException;
 
 public abstract class GuiElement {
 
-    protected abstract void draw(GuiGraphics guiGraphics) throws GuiDrawException;
+    protected boolean isActive = true;
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public abstract void draw(GuiGraphics guiGraphics) throws GuiDrawException;
 
 }
