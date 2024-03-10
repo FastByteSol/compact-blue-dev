@@ -10,4 +10,8 @@ public abstract class ActionGuiElement extends GuiElement {
         return false;
     }
 
+    public boolean onMouseMove(double mouseX, double mouseY){
+        return false;
+    }
+
 }
