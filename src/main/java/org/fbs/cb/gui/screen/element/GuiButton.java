@@ -4,14 +4,14 @@ import net.minecraft.client.gui.GuiGraphics;
 import org.fbs.cb.CB;
 import org.fbs.cb.exception.GuiDrawException;
 
-public class GuiButton extends MenuGuiElement{
+public class GuiButton extends ActionGuiElement {
     @Override
-    protected void draw(GuiGraphics guiGraphics) throws GuiDrawException {
+    public void draw(GuiGraphics guiGraphics) throws GuiDrawException {
 
     }
 
     @Override
-    protected void onClick(double mouseX, double mouseY, int mouseKey) {
+    public void onClick(double mouseX, double mouseY, int mouseKey) {
         CB.LOGGER.info("click");
     }
 }

@@ -4,7 +4,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.phys.Vec2;
 import org.fbs.cb.exception.GuiDrawException;
 
-public class GuiRectanglePlain extends MenuGuiElement{
+public class GuiRectanglePlain extends GuiElement {
 
     private GuiColor color;
     private Vec2 firstPoint, secondPoint;
