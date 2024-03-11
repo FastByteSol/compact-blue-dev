@@ -1,4 +1,4 @@
-package org.fbs.cb.gui.screen.element;
+package org.fbs.cb.gui;
 
 import net.minecraft.client.gui.GuiGraphics;
 import org.fbs.cb.exception.GuiDrawException;

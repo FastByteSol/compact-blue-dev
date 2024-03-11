@@ -3,12 +3,14 @@ package org.fbs.cb.gui.screen.element;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.phys.Vec2;
 import org.fbs.cb.exception.GuiDrawException;
+import org.fbs.cb.gui.ActionGuiElement;
+import org.fbs.cb.gui.Scroller;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GuiPanel extends ActionGuiElement{
+public class GuiPanel extends ActionGuiElement {
 
     private boolean isDrawn = false;
     private ActionGuiElement lastClicked = null;
@@ -53,7 +55,7 @@ public class GuiPanel extends ActionGuiElement{
     }
 
     public void addScroller(@NotNull Scroller scroller){
-        scroller = scroller;
+        this.scroller = scroller;
         hasScroller = true;
     }
 

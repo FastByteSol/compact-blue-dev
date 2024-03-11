@@ -1,4 +1,4 @@
-package org.fbs.cb.gui.screen.element;
+package org.fbs.cb.gui;
 
 public abstract class ActionGuiElement extends GuiElement {
 

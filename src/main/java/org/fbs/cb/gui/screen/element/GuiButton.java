@@ -6,6 +6,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.phys.Vec2;
 import org.fbs.cb.CB;
 import org.fbs.cb.exception.GuiDrawException;
+import org.fbs.cb.gui.ActionGuiElement;
 import org.jetbrains.annotations.NotNull;
 
 public class GuiButton extends ActionGuiElement {

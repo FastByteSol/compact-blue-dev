@@ -3,6 +3,7 @@ package org.fbs.cb.gui.screen.element;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.phys.Vec2;
 import org.fbs.cb.exception.GuiDrawException;
+import org.fbs.cb.gui.GuiElement;
 
 public class GuiRectangleGradient extends GuiElement {
 
