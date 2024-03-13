@@ -11,6 +11,13 @@ public abstract class GuiElement {
         return isActive;
     }
 
+    public abstract void setActive(boolean isActive);
+
     public abstract void draw(GuiGraphics guiGraphics) throws GuiDrawException;
+
+    @Override
+    public String toString(){
+        return this.getClass().getName() + " " + this.getClass().getSimpleName();
+    }
 
 }
