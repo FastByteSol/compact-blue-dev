@@ -13,7 +13,7 @@ import java.util.List;
 public class GuiPanel extends ActionGuiElement {
 
     private boolean isDrawn = false;
-    private ActionGuiElement lastClicked = null;
+    private ActionGuiElement lastClicked, lastFocused, lastReleased;
     private Scroller scroller = null;
     private boolean hasScroller = false;
     private Vec2 firstPoint, secondPoint;
@@ -40,14 +40,14 @@ public class GuiPanel extends ActionGuiElement {
         this.secondPoint = new Vec2(x1, y1);
     }
 
-    private final List<ActionGuiElement> actionGuiElementList = new ArrayList<>();
+    private final List<GuiButton> guiButtonList = new ArrayList<>();
 
-    public void addGuiElement(ActionGuiElement actionGuiElement){
-        actionGuiElementList.add(actionGuiElement);
+    public void addGuiElement(GuiButton guiButton){
+        guiButtonList.add(guiButton);
     }
 
-    public void removeGuiElement(ActionGuiElement actionGuiElement){
-        actionGuiElementList.remove(actionGuiElement);
+    public void removeGuiElement(GuiButton guiButton){
+        guiButtonList.remove(guiButton);
     }
 
     public boolean isDrawn() {
@@ -61,27 +61,78 @@ public class GuiPanel extends ActionGuiElement {
 
     @Override
     public void draw(GuiGraphics guiGraphics) throws GuiDrawException {
-        if (!actionGuiElementList.isEmpty()){
-            for (ActionGuiElement guiElement: actionGuiElementList){
+        if (!guiButtonList.isEmpty()){
+            for (ActionGuiElement guiElement: guiButtonList){
                 guiElement.draw(guiGraphics);
             }
             isDrawn = true;
+            isActive = true;
         }
     }
 
     @Override
-    public boolean onMouseClick(double mouseX, double mouseY, int mouseKey) {
-        if (mouseX >= firstPoint.x && mouseX <= secondPoint.x
-                && mouseY >= firstPoint.y && mouseY <= secondPoint.y) {
-            for (ActionGuiElement guiElement : actionGuiElementList) {
-                if (guiElement.onMouseClick(mouseX, mouseY, mouseKey)){
-                    lastClicked = guiElement;
-//                    removeGuiElement(guiElement);
-//                    addGuiElement(guiElement);
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    @Override
+    public boolean onMouseClick(double mouseX, double mouseY, int mouseKey) throws GuiDrawException {
+        if (isActive) {
+            if (mouseX >= firstPoint.x && mouseX <= secondPoint.x
+                    && mouseY >= firstPoint.y && mouseY <= secondPoint.y) {
+                if (lastClicked.onMouseClick(mouseX, mouseY, mouseKey)) {}
+                else if (lastFocused.onMouseClick(mouseX, mouseY, mouseKey)){}
+                else {
+                    for (ActionGuiElement guiElement : guiButtonList) {
+                        if (guiElement.onMouseClick(mouseX, mouseY, mouseKey)) {
+                            lastClicked = guiElement;
+                        }
+                    }
                 }
+                return true;
             }
-            return true;
         }
         return false;
     }
+
+    @Override
+    public boolean onMouseMove(double mouseX, double mouseY) {
+        if (isActive) {
+            if (mouseX >= firstPoint.x && mouseX <= secondPoint.x
+                    && mouseY >= firstPoint.y && mouseY <= secondPoint.y) {
+                if (lastFocused.onMouseMove(mouseX, mouseY)) {
+                }
+                else {
+                    for (ActionGuiElement guiElement : guiButtonList) {
+                        if (guiElement.onMouseMove(mouseX, mouseY)) {
+                            lastFocused = guiElement;
+                        }
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onMouseReleased(double mouseX, double mouseY, int mouseKey) {
+        if (isActive) {
+            if (mouseX >= firstPoint.x && mouseX <= secondPoint.x
+                    && mouseY >= firstPoint.y && mouseY <= secondPoint.y) {
+                if (lastReleased.onMouseReleased(mouseX, mouseY, mouseKey)) {
+                }
+                else {
+                    for (ActionGuiElement guiElement : guiButtonList) {
+                        if (guiElement.onMouseReleased(mouseX, mouseY, mouseKey)) {
+                            lastReleased = guiElement;
+                        }
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
