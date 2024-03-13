@@ -7,11 +7,13 @@ import net.minecraft.world.phys.Vec2;
 import org.fbs.cb.CB;
 import org.fbs.cb.exception.GuiDrawException;
 import org.fbs.cb.gui.ActionGuiElement;
+import org.fbs.cb.gui.GuiColor;
 import org.jetbrains.annotations.NotNull;
 
 public class GuiButton extends ActionGuiElement {
 
     private Vec2 firstPoint, secondPoint;
+    private double width, height;
     private GuiColor fillColor, borderColor;
     private Component text;
     private GuiColor textColor;
@@ -20,6 +22,8 @@ public class GuiButton extends ActionGuiElement {
     private boolean isDrawn = false;
     private boolean isActive = true;
     private GuiGraphics guiGraphics = null;
+    private GuiDropDownList guiDropDownList;
+    private int side;
 
     public void setFillColor(GuiColor fillColor) {
         this.fillColor = fillColor;
@@ -65,6 +69,18 @@ public class GuiButton extends ActionGuiElement {
         }
         this.firstPoint = new Vec2(x0, y0);
         this.secondPoint = new Vec2(x1, y1);
+        width = this.secondPoint.x - this.firstPoint.x;
+        height = this.secondPoint.y - this.firstPoint.y;
+        setActive(true);
+    }
+
+    public void setDropDowList(GuiDropDownList guiDropDownList, int side){
+        this.guiDropDownList = guiDropDownList;
+        this.side = side;
+    }
+
+    public GuiDropDownList getGuiDropDownList() {
+        return guiDropDownList;
     }
 
     @Override
@@ -85,7 +101,7 @@ public class GuiButton extends ActionGuiElement {
             if (font == null) throw new GuiDrawException("Font is null");
             double width = secondPoint.x - firstPoint.x;
             double height = secondPoint.y - firstPoint.y;
-            guiGraphics.drawCenteredString(font, text, (int) Math.round(width / 2), (int)Math.round(height / 2), textColor.getColor());
+            guiGraphics.drawCenteredString(font, text, (int) (firstPoint.x + Math.round(width / 2)), (int) (firstPoint.y + Math.round(height / 2)), textColor.getColor());
         }
 
         if (hasBorder){
@@ -95,20 +111,58 @@ public class GuiButton extends ActionGuiElement {
         isDrawn = true;
     }
 
+
+
     @Override
-    public boolean onMouseClick(double mouseX, double mouseY, int mouseKey) {
-        if (isDrawn) {
+    public boolean onMouseReleased(double mouseX, double mouseY, int mouseKey) {
+        if (isDrawn && isActive) {
             if (mouseX >= firstPoint.x && mouseX <= secondPoint.x
                     && mouseY >= firstPoint.y && mouseY <= secondPoint.y) {
-                if (mouseKey == 0) {
-                    CB.LOGGER.info("Left click");
-                } else if (mouseKey == 1) {
-                    CB.LOGGER.info("Right click");
-                } else if (mouseKey == 2) {
-                    CB.LOGGER.info("Scroll click");
-                } else {
-                    CB.LOGGER.info("Unregistered click");
-                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onMouseMove(double mouseX, double mouseY) {
+        if (isDrawn && isActive) {
+            if (mouseX >= firstPoint.x && mouseX <= secondPoint.x
+                    && mouseY >= firstPoint.y && mouseY <= secondPoint.y) {
+                CB.LOGGER.info("Focused " + mouseX + ":" + mouseY);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onMouseClick(double mouseX, double mouseY, int mouseKey) throws GuiDrawException {
+        CB.LOGGER.info("isDrawn: " + isDrawn + " isActive:" + isActive);
+        if (isDrawn && isActive) {
+            if (mouseX >= firstPoint.x && mouseX <= secondPoint.x
+                    && mouseY >= firstPoint.y && mouseY <= secondPoint.y) {
+//                if (guiDropDownList != null){
+//                    switch (side){
+//                        case 0: {
+//                            guiDropDownList.setCoordinates(new Vec2((float) (firstPoint.x + width), firstPoint.y));
+//                            guiDropDownList.setColor(fillColor);
+//                            guiDropDownList.setSide(side);
+//                            guiDropDownList.draw(guiGraphics);
+//                            break;
+//                        }
+//                        case 1: {
+//                            guiDropDownList.setCoordinates(new Vec2(firstPoint.x, firstPoint.y));
+//                            guiDropDownList.setColor(fillColor);
+//                            guiDropDownList.setSide(side);
+//                            guiDropDownList.draw(guiGraphics);
+//                            break;
+//                        }
+//                        default: {
+//                            throw new GuiDrawException("Incorrect value: " + side + " of 'side' variable");
+//                        }
+//                    }
+//                }
                 return true;
             }
         }
