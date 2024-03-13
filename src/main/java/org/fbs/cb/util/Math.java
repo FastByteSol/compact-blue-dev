@@ -4,7 +4,7 @@ public class Math {
 
     private Math(){}
 
-    public double normalize(double min, double max, double value){
+    public static double normalize(double min, double max, double value){
         if (value > max){
             return 1;
         }
