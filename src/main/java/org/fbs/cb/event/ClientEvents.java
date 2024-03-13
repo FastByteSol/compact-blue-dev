@@ -11,7 +11,7 @@ import org.fbs.cb.gui.screen.MenuScreen;
 import org.fbs.cb.util.KeyBinding;
 
 public class ClientEvents {
-    private static final MenuScreen menuScreen = new MenuScreen(Minecraft.getInstance().screen, Minecraft.getInstance());
+    public static final MenuScreen MENU_SCREEN = new MenuScreen(Minecraft.getInstance().screen, Minecraft.getInstance());
     @Mod.EventBusSubscriber(modid = CB.MOD_ID, value = Dist.CLIENT)
     public static class ClientForgeEvents {
         @SubscribeEvent
@@ -22,7 +22,7 @@ public class ClientEvents {
         public static void onKeyInput(InputEvent.Key key){
             if (KeyBinding.OPEN_MENU_KEY.consumeClick()){
                 try {
-                    Minecraft.getInstance().setScreen(menuScreen);
+                    Minecraft.getInstance().setScreen(MENU_SCREEN);
                 }
                 catch (Exception e){
                     CB.LOGGER.info("info:", (Object) e.getStackTrace());
