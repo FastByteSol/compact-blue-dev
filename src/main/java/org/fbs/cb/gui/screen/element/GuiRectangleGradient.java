@@ -22,8 +22,13 @@ public class GuiRectangleGradient extends GuiElement {
     }
 
     @Override
-    public void setActive(boolean isActive) {
+    public void setDrawn(boolean isDrawn) {
 
+    }
+
+    @Override
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
     @Override

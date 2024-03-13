@@ -12,7 +12,6 @@ import java.util.List;
 
 public class GuiPanel extends ActionGuiElement {
 
-    private boolean isDrawn = false;
     private ActionGuiElement lastClicked, lastFocused, lastReleased;
     private Scroller scroller = null;
     private boolean hasScroller = false;
@@ -50,10 +49,6 @@ public class GuiPanel extends ActionGuiElement {
         guiButtonList.remove(guiButton);
     }
 
-    public boolean isDrawn() {
-        return isDrawn;
-    }
-
     public void addScroller(@NotNull Scroller scroller){
         this.scroller = scroller;
         hasScroller = true;
@@ -73,6 +68,11 @@ public class GuiPanel extends ActionGuiElement {
     @Override
     public void setActive(boolean isActive) {
         this.isActive = isActive;
+    }
+
+    @Override
+    public void setDrawn(boolean isDrawn) {
+
     }
 
     @Override

@@ -13,6 +13,14 @@ public abstract class GuiElement {
 
     public abstract void setActive(boolean isActive);
 
+    protected boolean isDrawn = false;
+
+    public boolean isDrawn() {
+        return isDrawn;
+    }
+
+    public abstract void setDrawn(boolean isDrawn);
+
     public abstract void draw(GuiGraphics guiGraphics) throws GuiDrawException;
 
     @Override

@@ -19,7 +19,6 @@ public class GuiButton extends ActionGuiElement {
     private GuiColor textColor;
     private Font font;
     private boolean hasBorder = false;
-    private boolean isDrawn = false;
     private boolean isActive = true;
     private GuiGraphics guiGraphics = null;
     private GuiDropDownList guiDropDownList;
@@ -111,7 +110,10 @@ public class GuiButton extends ActionGuiElement {
         isDrawn = true;
     }
 
+    @Override
+    public void setDrawn(boolean isDrawn) {
 
+    }
 
     @Override
     public boolean onMouseReleased(double mouseX, double mouseY, int mouseKey) {
