@@ -1,22 +1,28 @@
 package org.fbs.cb.gui.screen.element;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.phys.Vec2;
-import org.fbs.cb.CB;
+import org.fbs.cb.event.ClientEvents;
 import org.fbs.cb.exception.GuiDrawException;
 import org.fbs.cb.gui.ActionGuiElement;
 import org.fbs.cb.gui.Category;
 import org.fbs.cb.gui.GuiColor;
+import org.fbs.cb.util.Math;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GuiDropDownList extends ActionGuiElement {
 
+    public GuiDropDownList(Vec2 firstPoint, int side, GuiColor color){
+        this.firstPoint = firstPoint;
+        this.side = side;
+        this.guiColor = color;
+        setActive(true);
+    }
+
     private final List<Category> categories = new ArrayList<>();
     private Vec2 firstPoint;
-    private Vec2 secondPoint;
     private int side;
     private GuiColor guiColor;
 
@@ -24,41 +30,48 @@ public class GuiDropDownList extends ActionGuiElement {
         categories.add(category);
     }
 
-    public void setCoordinates(Vec2 firstPoint){
-        this.firstPoint = firstPoint;
-    }
-
-    public void setSide(int side) {
-        this.side = side;
-    }
-
     public Vec2 getFirstPoint() {
         return firstPoint;
     }
 
-    public void setColor(GuiColor guiColor){
-        this.guiColor = guiColor;
+    @Override
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
     }
 
     @Override
-    public void setActive(boolean isActive) {
+    public void setDrawn(boolean isDrawn) {
 
     }
 
     @Override
     public void draw(GuiGraphics guiGraphics) throws GuiDrawException {
-        try {
-            double SCREEN_WIDTH = Minecraft.getInstance().screen.getRectangle().width();
-            double SCREEN_HEIGHT = Minecraft.getInstance().screen.getRectangle().height();
-        }
-        catch (Exception e){
-            CB.LOGGER.info(e.getMessage());
-        }
-
         GuiRectanglePlain background = new GuiRectanglePlain();
-//        double height = (categories.size() * );
-//        background.setCoordinates(firstPoint, );
 
+        double maxCategoryWidth = 0;
+        for (Category category: categories){
+            if (category.MAX_WIDTH() > maxCategoryWidth){
+                maxCategoryWidth = category.MAX_WIDTH();
+            }
+        }
+
+        int elements = 0;
+        for (Category category: categories){
+            elements += category.actionGuiElementList().size();
+        }
+        double height = (
+                        (categories.size() * Math.normalize(0, ClientEvents.MENU_SCREEN.HEIGHT, 10))
+                        +
+                        (elements * Math.normalize(0, ClientEvents.MENU_SCREEN.HEIGHT, 20))
+        );
+
+        height = java.lang.Math.min(firstPoint.y + height, ClientEvents.MENU_SCREEN.HEIGHT);
+        maxCategoryWidth = java.lang.Math.min(firstPoint.x + maxCategoryWidth, ClientEvents.MENU_SCREEN.WIDTH);
+
+        background.setCoordinates(firstPoint, new Vec2((float) (firstPoint.x + maxCategoryWidth), (float) height));
+
+
+        isDrawn = true;
     }
 
 }
