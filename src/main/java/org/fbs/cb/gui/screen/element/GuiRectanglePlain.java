@@ -3,6 +3,7 @@ package org.fbs.cb.gui.screen.element;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.phys.Vec2;
 import org.fbs.cb.exception.GuiDrawException;
+import org.fbs.cb.gui.GuiColor;
 import org.fbs.cb.gui.GuiElement;
 
 public class GuiRectanglePlain extends GuiElement {
@@ -17,6 +18,11 @@ public class GuiRectanglePlain extends GuiElement {
     public void setCoordinates(Vec2 firstPoint, Vec2 secondPoint){
         this.firstPoint = firstPoint;
         this.secondPoint = secondPoint;
+    }
+
+    @Override
+    public void setActive(boolean isActive) {
+
     }
 
     @Override
