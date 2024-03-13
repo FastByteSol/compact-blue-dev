@@ -8,7 +8,7 @@ import org.jetbrains.annotations.UnmodifiableView;
 import java.util.Collections;
 import java.util.List;
 
-public record Category(Component component, List<ActionGuiElement> actionGuiElementList) {
+public record Category(Component component, List<ActionGuiElement> actionGuiElementList, double MAX_WIDTH) {
 
     @Contract(pure = true)
     @Override
