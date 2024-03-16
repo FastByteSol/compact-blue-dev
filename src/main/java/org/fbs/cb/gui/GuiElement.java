@@ -19,7 +19,7 @@ public abstract class GuiElement {
         return isDrawn;
     }
 
-    public abstract void setDrawn(boolean isDrawn);
+    protected void setDrawn(boolean isDrawn){}
 
     public abstract void draw(GuiGraphics guiGraphics) throws GuiDrawException;
 
