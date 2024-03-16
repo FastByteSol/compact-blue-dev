@@ -9,10 +9,15 @@ public class Scroller {
 
     private final double min, max;
 
+    private double scale = 10;
+
     private double progress = 0;
 
     public double getProgress() {
         return progress;
+    }
+    public void setScale(double scale) {
+        this.scale = scale;
     }
     public void add(double value){
         progress = Math.min(max, progress + value);
