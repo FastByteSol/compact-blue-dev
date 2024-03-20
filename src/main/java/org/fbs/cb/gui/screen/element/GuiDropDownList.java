@@ -7,7 +7,9 @@ import org.fbs.cb.exception.GuiDrawException;
 import org.fbs.cb.gui.ActionGuiElement;
 import org.fbs.cb.gui.Category;
 import org.fbs.cb.gui.GuiColor;
+import org.fbs.cb.gui.Scroller;
 import org.fbs.cb.util.Math;
+import org.fbs.cb.util.ScrollerDrawingThread;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +24,14 @@ public class GuiDropDownList extends ActionGuiElement {
     }
 
     private final List<Category> categories = new ArrayList<>();
-    private Vec2 firstPoint;
+    private final GuiGraphics guiGraphics = ClientEvents.MENU_SCREEN.getGUI_GRAPHICS();
+    private Scroller verticalScroller, horizontalScroller;
+    private Vec2 firstPoint = null;
+    private Vec2 secondPoint;
+    private double maxWidth, height, finalWidth, finalHeight;
     private int side;
-    private GuiColor guiColor;
+    private final GuiColor guiColor;
+    private final GuiRectanglePlain background = new GuiRectanglePlain();
 
     public void addCategory(Category category){
         categories.add(category);
@@ -39,14 +46,16 @@ public class GuiDropDownList extends ActionGuiElement {
         this.isActive = isActive;
     }
 
-    @Override
-    public void setDrawn(boolean isDrawn) {
+    public void setHorizontalScroller(Scroller horizontalScroller) {
+        this.horizontalScroller = horizontalScroller;
+    }
 
+    public void setVerticalScroller(Scroller verticalScroller) {
+        this.verticalScroller = verticalScroller;
     }
 
     @Override
     public void draw(GuiGraphics guiGraphics) throws GuiDrawException {
-        GuiRectanglePlain background = new GuiRectanglePlain();
 
         double maxCategoryWidth = 0;
         for (Category category: categories){
@@ -65,13 +74,59 @@ public class GuiDropDownList extends ActionGuiElement {
                         (elements * Math.normalize(0, ClientEvents.MENU_SCREEN.HEIGHT, 20))
         );
 
-        height = java.lang.Math.min(firstPoint.y + height, ClientEvents.MENU_SCREEN.HEIGHT);
-        maxCategoryWidth = java.lang.Math.min(firstPoint.x + maxCategoryWidth, ClientEvents.MENU_SCREEN.WIDTH);
+        final double finalHeight = java.lang.Math.min(firstPoint.y + height, ClientEvents.MENU_SCREEN.HEIGHT);
+        final double finalWidth = java.lang.Math.min(firstPoint.x + maxCategoryWidth, ClientEvents.MENU_SCREEN.WIDTH);
 
-        background.setCoordinates(firstPoint, new Vec2((float) (firstPoint.x + maxCategoryWidth), (float) height));
+        this.height = height;
+        maxWidth = maxCategoryWidth;
+        this.finalHeight = finalHeight;
+        this.finalWidth = finalWidth;
 
+        secondPoint = new Vec2((float) (firstPoint.x + finalWidth), (float) finalHeight);
+
+        background.setCoordinates(firstPoint, secondPoint);
+        background.setColor(guiColor);
+        background.draw(guiGraphics);
 
         isDrawn = true;
     }
+
+    @Override
+    public boolean onMouseMove(double mouseX, double mouseY) {
+        if (isDrawn && isActive) {
+            if (mouseX >= firstPoint.x && mouseX <= secondPoint.x
+                    && mouseY >= firstPoint.y && mouseY <= secondPoint.y) {
+                if (maxWidth != finalWidth){
+
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private final ScrollerDrawingThread horizontalThread = new ScrollerDrawingThread(guiGraphics, new Scroller(0, 1), new Vec2(firstPoint.x, firstPoint.y), new Vec2((float) finalWidth, (float) finalHeight), new Vec2((float) maxWidth, (float) height)){
+        @Override
+        public void draw() {
+
+        }
+
+        @Override
+        public void run() {
+            draw();
+        }
+    };
+
+    private final ScrollerDrawingThread verticalThread = new ScrollerDrawingThread(guiGraphics, new Scroller(0, 1), new Vec2(firstPoint.x, firstPoint.y), new Vec2((float) finalWidth, (float) finalHeight), new Vec2((float) maxWidth, (float) height)){
+        @Override
+        public void draw() {
+
+        }
+
+        @Override
+        public void run() {
+            draw();
+        }
+    };
 
 }
